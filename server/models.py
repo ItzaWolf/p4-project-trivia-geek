@@ -17,7 +17,17 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-gamesession.user',)
 
+    @validates('username')
+    def validate_username(self, key, username):
+        if len(username) < 2:
+            raise ValueError("Username must be at least two characters long")
+        return username
 
+    @validates('password')
+    def validate_password(self, key, password):
+        if len(password) < 4:
+            raise ValueError("Password must be at least four characters long")
+        return password
 
 class Quiz(db.Model, SerializerMixin):
     __tablename__ = "quizes"
@@ -26,7 +36,7 @@ class Quiz(db.Model, SerializerMixin):
     quizcategory = db.Column(db.String)
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
     questions = db.relationship("Question", back_populates="quiz")
-    gamesession = db.relationship("GameSession", back_populates="quiz")
+    gamesession = db.relationship("GameSession", back_populates="quiz", cascade="all,delete")
 
     serialize_rules = ('-questions.quiz', '-gamesession.quiz',)
 

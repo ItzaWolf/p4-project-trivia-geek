@@ -8,13 +8,8 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db
+from models import db, User, Question, Quiz, GameSession
 
-if __name__ == '__main__':
-    fake = Faker()
-    with app.app_context():
-        print("Starting seed...")
-        db.create_all()
         # Seed code goes here!
 
 # ScienceQuiz Seed Data
@@ -446,4 +441,48 @@ entertainment_quiz_data = [
         "answer": "D",  # Hawkins
     },
 ]
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        print("Starting seed...")
+
+        # Seed ScienceQuiz data
+        for item in science_quiz_data:
+            question = Question(
+            question=item["question"],
+            options=item["options"],
+            answer=item["answer"]
+        )
+            db.session.add(question)
+
+        # Seed TechQuiz data
+        for item in tech_quiz_data:
+            question = Question(
+            question=item["question"],
+            options=item["options"],
+            answer=item["answer"]
+        )
+            db.session.add(question)
+
+        # Seed AnimalsQuiz data
+        for item in animals_quiz_data:
+            question = Question(
+            question=item["question"],
+            options=item["options"],
+            answer=item["answer"]
+        )
+            db.session.add(question)
+
+        # Seed EntertainmentTrivia data
+        for item in entertainment_quiz_data:
+            question = Question(
+            question=item["question"],
+            options=item["options"],
+            answer=item["answer"]
+        )
+            db.session.add(question)
+
+        db.session.commit()
+        print("Seed completed successfully.")
 

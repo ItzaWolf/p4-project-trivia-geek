@@ -15,7 +15,7 @@ class User(db.Model, SerializerMixin):
 
     gamesession = db.relationship("GameSession", back_populates="user", cascade ="all,delete")
 
-    serialize_rules = ('-password', 'gamesession')
+    serialize_rules = ('-gamesession.user',)
 
 
 
@@ -28,7 +28,7 @@ class Quiz(db.Model, SerializerMixin):
     questions = db.relationship("Question", back_populates="quiz")
     gamesession = db.relationship("GameSession", back_populates="quiz")
 
-    serialize_rules = ('-questions', '-gamesession')
+    serialize_rules = ('-questions.qui', '-gamesession.quiz',)
 
 
 class Question(db.Model, SerializerMixin):
@@ -40,6 +40,8 @@ class Question(db.Model, SerializerMixin):
     quiz_id = db.Column(db.Integer, db.ForeignKey("quizes.id"))
     quiz = db.relationship("Quiz", back_populates="questions")
 
+    serialize_rules = ('-quiz.questions',)
+
 class GameSession(db.Model, SerializerMixin):
     __tablename__ = "gamesessions"
 
@@ -49,3 +51,4 @@ class GameSession(db.Model, SerializerMixin):
     quiz_id = db.Column(db.Integer, db.ForeignKey("quizes.id"))
     user = db.relationship("User", back_populates="gamesession")
     quiz = db.relationship("Quiz", back_populates="gamesession")
+    serialize_rules = ('-quiz.gamesession','-user.gamesession',)

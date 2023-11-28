@@ -35,7 +35,7 @@ class Quiz(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     quizcategory = db.Column(db.String)
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
-    questions = db.relationship("Question", back_populates="quiz")
+    questions = db.relationship("Question", back_populates="quiz", foreign_keys="Question.quiz_id")
     gamesession = db.relationship("GameSession", back_populates="quiz", cascade="all,delete")
 
     serialize_rules = ('-questions.quiz', '-gamesession.quiz',)
@@ -47,8 +47,9 @@ class Question(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String)
     answer = db.Column(db.String)
+    options = db.Column(db.JSON)
     quiz_id = db.Column(db.Integer, db.ForeignKey("quizes.id"))
-    quiz = db.relationship("Quiz", back_populates="questions")
+    quiz = db.relationship("Quiz", back_populates="questions", foreign_keys=[quiz_id])
 
     serialize_rules = ('-quiz.questions',)
 

@@ -28,7 +28,7 @@ class Quiz(db.Model, SerializerMixin):
     questions = db.relationship("Question", back_populates="quiz")
     gamesession = db.relationship("GameSession", back_populates="quiz")
 
-    serialize_rules = ('-questions.qui', '-gamesession.quiz',)
+    serialize_rules = ('-questions.quiz', '-gamesession.quiz',)
 
 
 class Question(db.Model, SerializerMixin):

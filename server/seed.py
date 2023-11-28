@@ -446,13 +446,17 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         print("Starting seed...")
-
+        try:
+            Question.query.delete()
+        except:
+            print("No Questions")
         # Seed ScienceQuiz data
         for item in science_quiz_data:
             question = Question(
             question=item["question"],
             options=item["options"],
-            answer=item["answer"]
+            answer=item["answer"],
+            quiz_id = 1
         )
             db.session.add(question)
 
@@ -461,7 +465,8 @@ if __name__ == '__main__':
             question = Question(
             question=item["question"],
             options=item["options"],
-            answer=item["answer"]
+            answer=item["answer"],
+            quiz_id = 2
         )
             db.session.add(question)
 
@@ -470,7 +475,8 @@ if __name__ == '__main__':
             question = Question(
             question=item["question"],
             options=item["options"],
-            answer=item["answer"]
+            answer=item["answer"],
+            quiz_id = 3
         )
             db.session.add(question)
 
@@ -479,7 +485,8 @@ if __name__ == '__main__':
             question = Question(
             question=item["question"],
             options=item["options"],
-            answer=item["answer"]
+            answer=item["answer"],
+            quiz_id = 4
         )
             db.session.add(question)
 

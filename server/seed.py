@@ -13,6 +13,33 @@ from models import db, User, Question, Quiz, GameSession
         # Seed code goes here!
 
 # ScienceQuiz Seed Data
+user_test_data = [
+    {
+        "username": "KB",
+        "password": "3517"
+    }
+]
+
+# Gamesession Seed Data
+gamesession_data = [
+    {
+        "user_id": 1,
+        "userscore": 5,
+        "quiz_id": 2
+    }
+]
+
+# Quiz Seed Data
+all_quiz_data = [
+    {
+        "quizcategory": {
+            "Science": science_quiz_data,
+            "Tech": tech_quiz_data,
+            "Animals": animals_quiz_data,
+            "Entertainment": entertainment_quiz_data
+        }
+    }
+]
 
 science_quiz_data = [
     {
@@ -444,21 +471,34 @@ entertainment_quiz_data = [
 
 if __name__ == '__main__':
     with app.app_context():
+        faker = Faker
         db.create_all()
         print("Starting seed...")
         try:
             Question.query.delete()
+            User.query.delete()
         except:
             print("No Questions")
+            print("No Users")
+        # Seed User Data
+        for item in user_test_data:
+            user = User(
+                username=item["username"],
+                password=item["password"]
+            )
+            db.session.add(user)
         # Seed ScienceQuiz data
         for item in science_quiz_data:
             question = Question(
             question=item["question"],
             options=item["options"],
             answer=item["answer"],
-            quiz_id = 1
+            quiz_id = science_quiz_data.id
         )
             db.session.add(question)
+        science_quiz_data = Quiz(quizcategory="Science")
+        db.session.add(science_quiz_data)
+        db.session.commit()
 
         # Seed TechQuiz data
         for item in tech_quiz_data:

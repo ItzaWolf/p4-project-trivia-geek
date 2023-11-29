@@ -33,10 +33,10 @@ gamesession_data = [
 all_quiz_data = [
     {
         "quizcategory": {
-            "Science": science_quiz_data,
-            "Tech": tech_quiz_data,
-            "Animals": animals_quiz_data,
-            "Entertainment": entertainment_quiz_data
+            "Science": "science_quiz_data",
+            "Tech": "tech_quiz_data",
+            "Animals": "animals_quiz_data",
+            "Entertainment": "entertainment_quiz_data"
         }
     }
 ]
@@ -474,12 +474,15 @@ if __name__ == '__main__':
         faker = Faker
         db.create_all()
         print("Starting seed...")
-        try:
-            Question.query.delete()
-            User.query.delete()
-        except:
-            print("No Questions")
-            print("No Users")
+        Question.query.delete()
+        User.query.delete()
+        Quiz.query.delete()
+        GameSession.query.delete()
+        # try:
+           
+        # except:
+        #     print("No Questions")
+        #     print("No Users")
         # Seed User Data
         for item in user_test_data:
             user = User(
@@ -488,17 +491,33 @@ if __name__ == '__main__':
             )
             db.session.add(user)
         # Seed ScienceQuiz data
+        science_quiz = Quiz(quizcategory="Science", question_id = 1)
+        tech_quiz = Quiz(quizcategory="Tech", question_id = 2)
+        animals_quiz = Quiz(quizcategory="Animals", question_id = 3)
+        entertainment_quiz = Quiz(quizcategory="Entertainment", question_id = 4)
+        db.session.add(science_quiz)
+        db.session.add(tech_quiz)
+        db.session.add(animals_quiz)
+        db.session.add(entertainment_quiz)
+        db.session.commit()
+
+        for item in gamesession_data:
+            gamesession_data = GameSession(
+                user_id=item["user_id"],
+                userscore= item['userscore'],
+                quiz_id= item['quiz_id']
+            )
+            db.session.add(gamesession_data)
+        
+
         for item in science_quiz_data:
             question = Question(
             question=item["question"],
             options=item["options"],
             answer=item["answer"],
-            quiz_id = science_quiz_data.id
+            quiz_id=science_quiz.id  # Use the ID of the newly added quiz
         )
             db.session.add(question)
-        science_quiz_data = Quiz(quizcategory="Science")
-        db.session.add(science_quiz_data)
-        db.session.commit()
 
         # Seed TechQuiz data
         for item in tech_quiz_data:

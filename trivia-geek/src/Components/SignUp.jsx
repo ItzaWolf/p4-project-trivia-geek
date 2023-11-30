@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from "react";
+import App from "../App";
 
 function SignUp({ handleNewUser }) {
-  cost[(userName, setUserName)] = useState("");
-  cost[(password, stePassword)] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState("");
+  const[userName, setUserName] = useState("");
+  const[password, setPassword] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [newUser, setNewUser] = useState(null)
 
   function handleSubmit(e) {
     e.preventDefault();
-    let obj = {
-      name: userName,
+    const user = {
+      username: userName,
       password: password,
     };
+    setNewUser(user)
   }
 
   useEffect(() => {
-    fetch("http://localhost:5555/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: userName,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((newUser) => {
-        handleNewUser(newUser);
-        setConfirmationMessage("New User Added!");
-      });
-  });
+    if (newUser) {
+      fetch("http://localhost:5555/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUser),
+      })
+        .then((res) => res.json())
+        .then((newUser) => {
+          handleNewUser(newUser);
+          setConfirmationMessage("New User Added!");
+          setIsSubmitted(true);
+        });
+    }
+  }, [newUser])
 
   return (
     <div className="new-user-form">
@@ -39,14 +42,14 @@ function SignUp({ handleNewUser }) {
           name="userName"
           placeholder="User Name"
           value={userName}
-          onChange={(e) => userName(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           password="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => password(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Add New User</button>
       </form>

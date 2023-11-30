@@ -8,9 +8,6 @@ const HomePage = ({ quizes, username }) => {
   return (
     <div>
       <h1>Home Page</h1>
-      <Link to={`/quiz/science_quiz_data?username=${username}`}>
-        Science Quiz
-      </Link>
       {/* Add more links for other quizzes */}
     </div>
   );

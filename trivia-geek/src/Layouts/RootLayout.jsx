@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import SignUp from "../Components/SignUp";
 
 function RootLayout() {
   return (

@@ -39,7 +39,7 @@ function App() {
         <Route index element={<HomePage quizes={quizes} />} />
         {/* <Route path="/user/:id" element={<User />} /> */}
         {/* <Route path="/quiz/:id" element={<Quiz />} /> */}
-        <Route path="/new" element={<SignUp handleNewUser={handleNewUser} />} />
+        <Route path="/signup" element={<SignUp handleNewUser={handleNewUser} />} />
       </Route>
     )
   );

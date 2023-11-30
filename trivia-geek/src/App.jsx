@@ -11,6 +11,9 @@ import {
 import HomePage from "./Components/HomePage";
 import RootLayout from "./Layouts/RootLayout";
 import SignUp from "./Components/SignUp";
+import QuizListPage from "./Components/QuizListPage";
+import QuizCard from "./Components/QuizCard";
+import QuizPage from "./Components/QuizPage";
 
 function App() {
   const [quizes, setQuizes] = useState([]);
@@ -29,16 +32,13 @@ function App() {
     setUser(updatedUser);
   }
 
-  // const displayQuizes = quizes.filter((quizes) => {
-  //   return quizes.name.toLowerCase().includes(search.toLowerCase());
-  // });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomePage quizes={quizes} />} />
-        {/* <Route path="/user/:id" element={<User />} /> */}
-        {/* <Route path="/quiz/:id" element={<Quiz />} /> */}
+        <Route path="/quiz/:id" element={<QuizPage />} />
+        {<Route path="/quiz" element={<QuizListPage quizes={quizes}/>}/>}
         <Route path="/signup" element={<SignUp handleNewUser={handleNewUser} />} />
       </Route>
     )

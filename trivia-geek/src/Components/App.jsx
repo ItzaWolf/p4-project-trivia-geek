@@ -17,7 +17,7 @@ function App() {
   const [quizes, setQuizes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:")
+    fetch("http://localhost:3000/quizes")
       .then((res) => res.json())
       .then((quizesArray) => {
         setQuizes(quizesArray);
@@ -37,11 +37,9 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home/>} />
-        <Route path="/user, /user/, /user/<int:user_id>" element={<User />} />
-        <Route path="/gamesession/<int:session_id>" element={<GameSession />} />
-        <Route path="/question/<int:question_id>" element={QuestionResource} />
-        <Route path="new" element={<NewUserForm handleNewUser={handleNewUser} />}></Route>
-        <Route path="/quiz, /quiz/<int:quiz_id>" element={<Quiz />}></Route>
+        <Route path="/user, /user/, /user/:id" element={<User />} />
+        <Route path="/quiz, /quiz/<int:quiz_id>" element={<Quiz />}/>
+        <Route path="/new" element={<NewUserForm handleNewUser={handleNewUser} />}/>
       </Route>
     )
   );

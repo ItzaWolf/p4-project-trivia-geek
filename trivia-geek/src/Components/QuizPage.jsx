@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function QuizCard({ quiz }) {
+function QuizPage({ quiz }) {
   const { question, options, answer } = quiz;
 
   return (
@@ -18,4 +18,4 @@ function QuizCard({ quiz }) {
   );
 }
 
-export default QuizCard;
+export default QuizPage;

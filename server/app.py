@@ -6,10 +6,10 @@ from models import Question, Quiz, GameSession, User
 api = Api(app)
 
 class UserResource(Resource):
-    def get(self, user_id):
-        user = User.query.get(user_id)
+    def get(self):
+        user = [u.to_dict() for u in User.query.all()]
         if user:
-            return {"user_id": user.id, "username": user.username}
+            return user, 200
         else:
             return {"message": "User not found"}, 404
 
@@ -121,7 +121,7 @@ class QuizResourceById(Resource):
         else:
             return {"message": "Quiz not found"}, 404
 # Define routes
-api.add_resource(UserResource, '/user', '/user/', '/user/<int:user_id>')
+api.add_resource(UserResource, '/user', '/user/<int:user_id>')
 api.add_resource(GameSessionResource, '/gamesession/<int:session_id>')
 api.add_resource(QuizResource, '/quiz')
 api.add_resource(QuizResourceById, '/quiz/<int:quiz_id>')

@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 
-function QuizCard({ quiz }) {
-  const { quizcategory } = quiz;
-  console.log(quiz);
+function QuizCard({ question }) {
+  
 
   return (
     <div>
-      <li id="quiz-card" alt={quiz.id}>{quizcategory}</li>
+       <li>
+              <label className="option-label"> 
+                {question.question}
+              </label>
+              
+            </li>
+             
+            <button> {question.options.A}</button> 
+            <button> {question.options.B}</button>
+            <button> {question.options.C}</button>
+            <button> {question.options.D}</button>
+
+                
+               
     </div>
   );
 }

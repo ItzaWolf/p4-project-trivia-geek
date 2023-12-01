@@ -1,58 +1,73 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import QuizCard from "./QuizCard";
 
 function QuizPage() {
   const { id } = useParams();
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState([]);
   const [isCorrect, setIsCorrect] = useState(null);
-  const [q, setQuestions] = useState([]);
+  const[quiz, setQuiz] = useState({
+    questions: []
+  });
+  // const [q, setQuestions] = useState([]);
+  
+const ques = (quiz.questions.map((question)=>{
+  return <QuizCard question={question}/>
+} ))
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
 
   const handleSubmit = () => {
-    const correct = selectedOption === answer;
+    const correct = selectedOption === quiz?.answer;
     setIsCorrect(correct);
   };
 
   useEffect(() => {
     fetch(`http://localhost:5555/quiz/${id}`)
       .then((res) => res.json())
-      .then((question) => {
-        setQuestions(question);
+      .then((quizData) => {
+        setQuiz(quizData);
       });
-  }, []);
-  console.log(q);
+  }, [id]);
+
+  if (!quiz) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="quiz-container">
       <div className="quiz-card">
-        {q.questions?.map((data) => {
-          return <h2 key={q.id}>{data.question}</h2>;
-          // console.log(data);
-        })}
-
-        {/* <ul className="options-list">
-          {options.map((option, index) => (
-            <li key={index}>
+      
+        <ul className="options-list">
+          {/* {quiz.question.map((key) => (
+            <li key={key}>
               <label className="option-label">
                 <input
                   type="radio"
                   name="quiz-option"
-                  value={option}
-                  checked={selectedOption === option}
-                  onChange={() => handleOptionChange(option)}
+                  value={key}
+                  checked={selectedOption === key}
+                  onChange={() => handleOptionChange(key)}
                 />
-                {option}
+                {quiz.options[key]}
               </label>
             </li>
-          ))}
-        </ul> */}
+          ))} */}
+          {ques}
+        </ul>
+
 
         <button className="submit-button" onClick={handleSubmit}>
           Submit
         </button>
+
+        {isCorrect !== null && (
+          <div className={isCorrect ? "correct-answer" : "incorrect-answer"}>
+            {isCorrect ? "Correct!" : "Incorrect. Try again!"}
+          </div>
+        )}
       </div>
     </div>
   );

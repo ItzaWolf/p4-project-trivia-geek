@@ -8,7 +8,7 @@ function RootLayout() {
         <nav class="flex justify-evenly">
           <NavLink to="/">Home </NavLink>
           <NavLink to="/signup">Sign Up</NavLink>
-          <NavLink to="/quiz">Quiz </NavLink>
+          <NavLink to="/quiz/">Quiz </NavLink>
         </nav>
       </header>
       <main>

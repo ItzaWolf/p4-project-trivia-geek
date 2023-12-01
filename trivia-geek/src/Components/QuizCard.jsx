@@ -17,8 +17,6 @@ function QuizCard({ question}) {
             <button> {question.options.B}</button>
             <button> {question.options.C}</button>
             <button> {question.options.D}</button>
-
-                
                
     </div>
   );

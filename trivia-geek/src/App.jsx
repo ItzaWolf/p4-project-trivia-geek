@@ -38,7 +38,7 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomePage quizes={quizes} />} />
         <Route path="/quiz/:id" element={<QuizPage />} />
-        {<Route path="/quiz" element={<QuizListPage quizes={quizes}/>}/>}
+        <Route path="/quiz" element={<QuizListPage quizes={quizes}/>}/>
         <Route path="/signup" element={<SignUp handleNewUser={handleNewUser} />} />
       </Route>
     )

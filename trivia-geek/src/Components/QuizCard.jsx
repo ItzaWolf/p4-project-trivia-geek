@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-function QuizCard({ question }) {
+function QuizCard({ question}) {
+    console.log(question)
   
 
   return (

@@ -10,7 +10,7 @@ function QuizPage() {
     questions: []
   });
   // const [q, setQuestions] = useState([]);
-  
+  console.log(quiz)
 const ques = (quiz.questions.map((question)=>{
   return <QuizCard question={question}/>
 } ))
@@ -28,6 +28,7 @@ const ques = (quiz.questions.map((question)=>{
     fetch(`http://localhost:5555/quiz/${id}`)
       .then((res) => res.json())
       .then((quizData) => {
+        console.log(quizData)
         setQuiz(quizData);
       });
   }, [id]);

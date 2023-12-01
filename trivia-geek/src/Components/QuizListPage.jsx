@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import QuizCard from "./QuizCard";
 
 function QuizListPage({quizes}) {
+  console.log(quizes)
   
 
   return (
@@ -13,7 +14,7 @@ function QuizListPage({quizes}) {
         {quizes.map((quiz) => (
           <li key={quiz.id}>
             <Link to={`/quiz/${quiz.id}`}>
-              <QuizCard key={quiz.id} quiz={quiz} />
+             <h2>{quiz.quizcategory}</h2>
             </Link>
           </li>
         ))}

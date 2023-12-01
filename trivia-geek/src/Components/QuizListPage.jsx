@@ -2,9 +2,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import QuizCard from "./QuizCard";
+import NewQuizForm from "./NewQuizForm";
 
-function QuizListPage({quizes}) {
-  console.log(quizes)
+function QuizListPage({quizes, setQuizes}) {
+        const [showNewQuizForm, setShowNewQuizForm] = useState(false);
+        
+        const handleNewQuizClick = () => {
+          setShowNewQuizForm(true);
+        };
+
+        const handleNewQuizSubmit = (newQuizData) => {
+            // Handle the submitted data (e.g., update state or send to the server)
+            console.log("New quiz data:", newQuizData);
+        
+            // Reset the form and hide it
+            setShowNewQuizForm(false);
+          };
   
 
   return (
@@ -19,6 +32,9 @@ function QuizListPage({quizes}) {
           </li>
         ))}
       </ul>
+      <button onClick={handleNewQuizClick}>Add New Quiz</button>
+
+      {showNewQuizForm && <NewQuizForm onSubmit={handleNewQuizSubmit} setQuizes={setQuizes} />} 
     </div>
   );
 }

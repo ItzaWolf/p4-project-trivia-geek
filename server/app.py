@@ -79,7 +79,7 @@ class QuizResource(Resource):
         
     def post(self):
         data = request.get_json()
-        quiz = Quiz(name=data['name'])
+        quiz = Quiz(quizcategory=data['quizcategory'])
         db.session.add(quiz)
         db.session.commit()
         return {"message": "Quiz created successfully", "quiz_id": quiz.id}, 201

@@ -16,7 +16,7 @@ function QuizListPage({quizes, setQuizes}) {
             console.log("New quiz data:", newQuizData);
         
             // Reset the form and hide it
-            setShowNewQuizForm(false);
+            setShowNewQuizForm(true);
           };
   
 
